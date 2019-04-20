@@ -3,7 +3,6 @@ import numpy as np
 
 class Neuron:
 
-
     def __init__(self, value=0):
         self.value = value
         self.bounded = []
@@ -12,10 +11,10 @@ class Neuron:
         self.bounded_weight_error = 0
 
     def bind(self, neuron, weight):
-        self.reverse_bounded.append({'neuron': neuron, 'weight': weight})
+        self.bounded.append({'neuron': neuron, 'weight': weight})
 
     def reverse__bind(self, neuron):
-        self.bounded.append({'neuron': neuron})
+        self.reverse_bounded.append({'neuron': neuron})
 
     def get_bounded(self):
         return self.bounded

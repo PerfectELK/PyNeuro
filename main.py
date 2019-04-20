@@ -1,20 +1,37 @@
-from vendor.layer.Layer import Layer
 
-layer1 = Layer(3, begin__values=[1, 1, 0])
-print("layer 1 created")
-layer2 = Layer(4)
-print("layer 2 created")
-layer1.create_neurons()
-print("layer 1 neurons created")
-layer2.create_neurons()
-print("layer 2 neurons created")
+from vendor.network.Network import Network
 
-layer1.create_neighbours_layers(after_layer=layer2).bind_after_layer()
-print("layer 1 bounded with 2 layer")
-layer2.create_neighbours_layers(before_layer=layer1).bind_before_layer()
-print("layer 2 bounded with 1 layer")
+layers = [
+    {
+        'amount_neurons': 3,
+        'begin__values': [1, 1, 1],
+    },
+    {
+        'amount_neurons': 2,
+        'begin__values': [55, 66]
+    },
+    {
+        'amount_neurons': 2,
+        'begin__values': [77, 99]
+    },
+]
 
-print(layer1.get__neurons()[0].value)
+network = Network(layers=layers)
+
+for layer in network.layers:
+
+    print("Layer begin")
+    for neuron in layer.neurons:
+        print('heuron start')
+        print("neurons bounded")
+        print(neuron.bounded)
+        print(neuron.value)
+        print("neurons reverse_bounded")
+        print(neuron.reverse_bounded)
+        print('heuron end')
+    print("Layer end")
+
+
 
 
 
