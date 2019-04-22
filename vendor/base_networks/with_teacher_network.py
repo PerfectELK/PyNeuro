@@ -7,6 +7,14 @@ class WithTeacherNetwork(Network):
         super().__init__(layers=config)
         self.teacher = teacher
 
+    def training(self):
+        for layer in self.layers:
+            neurons = layer.get__neurons()
+            print("Layer start")
+            for neuron in neurons:
+                neuron.calculate__weight()
+                print(neuron.value)
+            print("layer end")
 
 
 

@@ -67,7 +67,7 @@ class Layer:
             after_neurons = self.after_layer.get__neurons()
             for neuron in self.neurons:
                 for after_neuron in after_neurons:
-                    neuron.bind(after_neuron,random.random())
+                    neuron.bind(after_neuron, random.random())
 
     def bind_before_layer(self):
         if(self.before_layer != None):

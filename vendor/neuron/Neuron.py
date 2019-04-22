@@ -35,7 +35,8 @@ class Neuron:
 
     def calculate__weight(self):
         calculated = 0
-        for bound in self.bounded:
-            calculated += bound.weight * bound.neuron.value
-        self.calculated__weight = self.sigmoid(calculated)
-        return self
+        for reverse_bound in self.reverse_bounded:
+            for bound in reverse_bound['neuron'].get_bounded():
+                if id(bound['neuron']) == id(self):
+                    calculated += (reverse_bound['neuron'].value * bound['weight'])
+        self.value = self.sigmoid(calculated)

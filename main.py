@@ -1,5 +1,6 @@
 
 from vendor.base_networks.with_teacher_network import WithTeacherNetwork
+import sys
 
 layers = [
     {
@@ -8,11 +9,11 @@ layers = [
     },
     {
         'amount_neurons': 2,
-        'begin__values': [55, 66]
+        'begin__values': []
     },
     {
-        'amount_neurons': 2,
-        'begin__values': [77, 99]
+        'amount_neurons': 1,
+        'begin__values': []
     },
 ]
 
@@ -28,9 +29,7 @@ teacher = [
 
 network = WithTeacherNetwork(config=layers, teacher=teacher)
 
-l0 = network.get__layer(0)
-
-l0.set__after_layer__weights()
+network.training()
 
 
 
