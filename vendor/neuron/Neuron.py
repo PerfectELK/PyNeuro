@@ -10,6 +10,14 @@ class Neuron:
         self.calculated__weight = 0
         self.bounded_weight_error = 0
 
+    def set__value(self, value):
+        self.value = value
+
+    def set__weight(self, neuron, weight):
+        for bound in self.bounded:
+            if id(bound['neuron']) == id(neuron):
+                bound['weight'] = weight
+
     def bind(self, neuron, weight):
         self.bounded.append({'neuron': neuron, 'weight': weight})
 

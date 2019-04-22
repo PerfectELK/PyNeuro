@@ -19,6 +19,40 @@ class Layer:
     def get__neurons(self):
         return self.neurons
 
+    def get__neuron(self, index):
+        return self.neurons[index]
+
+    def set__layer_values(self, values):
+        for index in range(0, len(self.neurons)):
+            item = self.neurons[index]
+            item.set__value(values[index])
+
+    def set__after_layer__weights_mass(self, weights=[]):
+        our_neuron_index = 0
+        external_neuron_index = 0
+        for neuron in self.neurons:
+            bounded = neuron.get_bounded()
+            for bound in bounded:
+                if weights[our_neuron_index][external_neuron_index] is not None:
+                    bound['weight'] = weights[our_neuron_index][external_neuron_index]
+                    external_neuron_index += 1
+            our_neuron_index += 1
+
+    def get__after_neurons(self):
+        neurons = []
+        for n in self.neurons:
+            bounded = n.get_bounded()
+            for bounded_neuron in bounded:
+                neurons.append(bounded_neuron)
+        return neurons
+
+    def set__after_layer__weights(self, neurons=[]):
+        after__neurons = self.get__after_neurons()
+        for neuron in neurons:
+            for after__neuron in after__neurons:
+                if id(neuron['neuron']) == id(after__neuron['neuron']):
+                    after__neuron['weight'] = neuron['neuron']
+
     def create_neurons(self):
         for num in range(0, self.amount_neurons):
             if(len(self.begin__values)):

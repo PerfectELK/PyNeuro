@@ -9,6 +9,9 @@ class Network:
         self.__create_layers()
         self.__bind__layers()
 
+    def get__layer(self, index):
+        return self.layers[index]
+
     def __create_layers(self):
         if self.__layers != None:
             for layer in self.__layers:

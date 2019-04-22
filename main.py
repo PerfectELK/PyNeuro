@@ -1,5 +1,5 @@
 
-from vendor.network.Network import Network
+from vendor.base_networks.with_teacher_network import WithTeacherNetwork
 
 layers = [
     {
@@ -16,20 +16,27 @@ layers = [
     },
 ]
 
-network = Network(layers=layers)
+teacher = [
+    [[1, 0, 1], 1],
+    [[1, 1, 1], 1],
+    [[0, 0, 1], 1],
+    [[1, 0, 0], 1],
+    [[0, 1, 0], 1],
+    [[0, 0, 0], 0],
+    [[0, 0, 0], 0],
+]
 
-for layer in network.layers:
+network = WithTeacherNetwork(config=layers, teacher=teacher)
 
-    print("Layer begin")
-    for neuron in layer.neurons:
-        print('heuron start')
-        print("neurons bounded")
-        print(neuron.bounded)
-        print(neuron.value)
-        print("neurons reverse_bounded")
-        print(neuron.reverse_bounded)
-        print('heuron end')
-    print("Layer end")
+l0 = network.get__layer(0)
+
+l0.set__after_layer__weights()
+
+
+
+
+
+
 
 
 
