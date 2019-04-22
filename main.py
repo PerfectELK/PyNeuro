@@ -29,6 +29,9 @@ teacher = [
 
 network = WithTeacherNetwork(config=layers, teacher=teacher)
 
+
+print(sys.getsizeof(network))
+
 network.training()
 
 

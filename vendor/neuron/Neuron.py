@@ -8,7 +8,7 @@ class Neuron:
         self.bounded = []
         self.reverse_bounded = []
         self.calculated__weight = 0
-        self.bounded_weight_error = 0
+        self.error = 0
 
     def set__value(self, value):
         self.value = value
@@ -27,11 +27,14 @@ class Neuron:
     def get_bounded(self):
         return self.bounded
 
+    def get__reverse_bounded(self):
+        return self.reverse_bounded
+
     def sigmoid(self, x):
         return 1/(1 + np.exp(-x))
 
     def sigmoid_dx(self):
-        return self.calculated__weight * (1 - self.calculated__weight)
+        return self.value * (1 - self.value)
 
     def calculate__weight(self):
         calculated = 0
