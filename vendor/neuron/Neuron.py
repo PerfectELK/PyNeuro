@@ -42,8 +42,6 @@ class Neuron:
         else:
             return False
 
-
-
     def calculate__weight(self):
         calculated = 0
         for reverse_bound in self.reverse_bounded:

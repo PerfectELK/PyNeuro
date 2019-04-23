@@ -28,10 +28,18 @@ teacher = [
 
 network = WithTeacherNetwork(config=layers, teacher=teacher)
 
-
-print(sys.getsizeof(network))
-
 network.training()
+
+values = [
+    [1, 1, 1],
+    [0, 0, 1],
+    [0, 1, 1],
+    [0, 0, 0]
+]
+
+for value in values:
+    print("Значение для входа:", value, " = ", network.calculate__result(value))
+
 
 
 
