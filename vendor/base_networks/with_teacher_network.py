@@ -8,23 +8,29 @@ class WithTeacherNetwork(Network):
         self.teacher = teacher
         self.current__teacher_index = 0
         self.learning__rate = 0.05
+        self.learning__ages = 100
         self.weights__delta = None
 
-    def training(self):
+    def trainnig(self):
+        i = 0
+        while i < self.learning__ages:
+            for teacher__index in range(0, len(self.teacher)):
+                self.set_current_teacher(teacher__index)
+                self.forward__distribution()
+                self.back__distribution()
+            i += 1
+
+    def forward__distribution(self):
         for layer in self.layers:
             neurons = layer.get__neurons()
-            print("Layer start")
             for neuron in neurons:
                 neuron.calculate__weight()
-                print(neuron.value)
-            print("layer end")
-        print("training end")
-        self.back__distribution()
+
 
     def get__same_neuron(self, neuron, list):
         for n in list:
-           if id(n['neuron']) == id(neuron):
-               return n
+            if id(n['neuron']) == id(neuron):
+                return n
 
     def set_current_teacher(self, index):
         layer = self.get__layer(0)
@@ -49,6 +55,8 @@ class WithTeacherNetwork(Network):
                     reverse = self.get__same_neuron(neuron, reverse['neuron'].get_bounded())
                     reverse['weight'] = reverse['weight'] - reverse__value * self.weights__delta * self.learning__rate
                     reverse['neuron'].error = reverse['weight'] * self.weights__delta
+
+        self.weights__delta = None
 
 
 
