@@ -9,7 +9,7 @@ class WithTeacherNetwork(Network):
         super().__init__(layers=config)
         self.teacher = teacher
         self.current__teacher_index = 0
-        self.learning__rate = 0.03
+        self.learning__rate = 0.1
         self.learning__ages = 15000
         self.weights__delta = None
 
