@@ -8,16 +8,22 @@ class WithTeacherNetwork(Network):
         self.teacher = teacher
         self.current__teacher_index = 0
         self.learning__rate = 0.05
-        self.learning__ages = 100
+        self.learning__ages = 500
         self.weights__delta = None
 
-    def trainnig(self):
+    def training(self):
         i = 0
         while i < self.learning__ages:
             for teacher__index in range(0, len(self.teacher)):
                 self.set_current_teacher(teacher__index)
+                print("Текущий учитель: ", self.teacher[self.current__teacher_index])
                 self.forward__distribution()
+                self.get__result()
                 self.back__distribution()
+                print("Дельта весов: ", self.weights__delta)
+                self.weights__delta = None
+                print("_______________")
+                self.get__weights()
             i += 1
 
     def forward__distribution(self):
@@ -26,6 +32,10 @@ class WithTeacherNetwork(Network):
             for neuron in neurons:
                 neuron.calculate__weight()
 
+    def get__result(self):
+        layer = self.get__layer(len(self.layers)-1)
+        neuron = layer.get__neuron(0)
+        print("Значение нейрона: ", neuron.value)
 
     def get__same_neuron(self, neuron, list):
         for n in list:
@@ -42,6 +52,21 @@ class WithTeacherNetwork(Network):
         neuron = last__layer.get__neuron(0)
         expected_value = self.teacher[self.current__teacher_index][1]
         neuron.error = neuron.value - expected_value
+        print("Значение ошибки: ", neuron.error)
+
+    def get__weights(self):
+        i = 1
+        for layer in self.layers:
+            print("Слой номер ____ ", i)
+            for neuron in layer.get__neurons():
+                print("________нейрон_________")
+                print(neuron.value)
+                print(neuron.bounded)
+                for bound in neuron.bounded:
+                    print(bound['weight'])
+                print("_______________________")
+            i += 1
+
 
     def back__distribution(self):
         self.calculate__error()
@@ -52,11 +77,18 @@ class WithTeacherNetwork(Network):
 
                 for reverse in neuron.get__reverse_bounded():
                     reverse__value = reverse['neuron'].value
-                    reverse = self.get__same_neuron(neuron, reverse['neuron'].get_bounded())
-                    reverse['weight'] = reverse['weight'] - reverse__value * self.weights__delta * self.learning__rate
-                    reverse['neuron'].error = reverse['weight'] * self.weights__delta
+                    reverse__same = self.get__same_neuron(neuron, reverse['neuron'].get_bounded())
+                    # print("Значение весов_______________")
+                    # print(reverse['weight'])
+                    reverse__same['weight'] = reverse__same['weight'] - reverse__value * self.weights__delta * self.learning__rate
+                    reverse['neuron'].error = reverse__same['weight'] * self.weights__delta
+                    # print("Ошибка нейрона_______________")
+                    # print(reverse['neuron'].error)
+                    # print("_______________Ошибка нейрона")
+                    # print(reverse['weight'])
+                    # print("______________Значение весов")
 
-        self.weights__delta = None
+
 
 
 

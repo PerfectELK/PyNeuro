@@ -42,4 +42,5 @@ class Neuron:
             for bound in reverse_bound['neuron'].get_bounded():
                 if id(bound['neuron']) == id(self):
                     calculated += (reverse_bound['neuron'].value * bound['weight'])
-        self.value = self.sigmoid(calculated)
+        if calculated != 0:
+            self.value = self.sigmoid(calculated)
