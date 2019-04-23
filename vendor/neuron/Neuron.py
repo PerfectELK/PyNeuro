@@ -36,11 +36,19 @@ class Neuron:
     def sigmoid_dx(self):
         return self.value * (1 - self.value)
 
+    def is__first_layer(self):
+        if len(self.reverse_bounded) == 0:
+            return True
+        else:
+            return False
+
+
+
     def calculate__weight(self):
         calculated = 0
         for reverse_bound in self.reverse_bounded:
             for bound in reverse_bound['neuron'].get_bounded():
                 if id(bound['neuron']) == id(self):
                     calculated += (reverse_bound['neuron'].value * bound['weight'])
-        if calculated != 0:
+        if not self.is__first_layer():
             self.value = self.sigmoid(calculated)

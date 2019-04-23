@@ -8,7 +8,7 @@ class WithTeacherNetwork(Network):
         self.teacher = teacher
         self.current__teacher_index = 0
         self.learning__rate = 0.05
-        self.learning__ages = 500
+        self.learning__ages = 1
         self.weights__delta = None
 
     def training(self):
@@ -20,10 +20,10 @@ class WithTeacherNetwork(Network):
                 self.forward__distribution()
                 self.get__result()
                 self.back__distribution()
-                print("Дельта весов: ", self.weights__delta)
+                # print("Дельта весов: ", self.weights__delta)
                 self.weights__delta = None
                 print("_______________")
-                self.get__weights()
+                # self.get__weights()
             i += 1
 
     def forward__distribution(self):
@@ -70,23 +70,26 @@ class WithTeacherNetwork(Network):
 
     def back__distribution(self):
         self.calculate__error()
+        i = 0
         for layer in reversed(self.layers):
             for neuron in layer.get__neurons():
-                if self.weights__delta is None:
-                    self.weights__delta = neuron.error * neuron.sigmoid_dx()
+                # print("Ошибка нейрона: ", neuron.error)
+                self.weights__delta = neuron.error * neuron.sigmoid_dx()
 
                 for reverse in neuron.get__reverse_bounded():
-                    reverse__value = reverse['neuron'].value
                     reverse__same = self.get__same_neuron(neuron, reverse['neuron'].get_bounded())
+                    reverse__value = reverse['neuron'].value
                     # print("Значение весов_______________")
                     # print(reverse['weight'])
                     reverse__same['weight'] = reverse__same['weight'] - reverse__value * self.weights__delta * self.learning__rate
                     reverse['neuron'].error = reverse__same['weight'] * self.weights__delta
+
                     # print("Ошибка нейрона_______________")
                     # print(reverse['neuron'].error)
                     # print("_______________Ошибка нейрона")
                     # print(reverse['weight'])
                     # print("______________Значение весов")
+                i += 1
 
 
 
