@@ -9,8 +9,8 @@ class WithTeacherNetwork(Network):
         super().__init__(layers=config)
         self.teacher = teacher
         self.current__teacher_index = 0
-        self.learning__rate = .09
-        self.learning__ages = 150000
+        self.learning__rate = .07
+        self.learning__ages = 75000
         self.weights__delta = None
 
     def training(self):
@@ -21,7 +21,7 @@ class WithTeacherNetwork(Network):
                 self.forward__distribution()
                 self.back__distribution()
                 self.weights__delta = None
-                self.get__result()
+                # self.get__result()
             i += 1
 
     def forward__distribution(self):
