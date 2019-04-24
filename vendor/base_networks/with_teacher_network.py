@@ -9,8 +9,8 @@ class WithTeacherNetwork(Network):
         super().__init__(layers=config)
         self.teacher = teacher
         self.current__teacher_index = 0
-        self.learning__rate = 0.1
-        self.learning__ages = 15000
+        self.learning__rate = .09
+        self.learning__ages = 150000
         self.weights__delta = None
 
     def training(self):
@@ -21,6 +21,7 @@ class WithTeacherNetwork(Network):
                 self.forward__distribution()
                 self.back__distribution()
                 self.weights__delta = None
+                self.get__result()
             i += 1
 
     def forward__distribution(self):
@@ -37,13 +38,21 @@ class WithTeacherNetwork(Network):
         self.set__values(values=values)
         self.forward__distribution()
         last__layer = self.get__layer(len(self.layers)-1)
-        neuron = last__layer.get__neuron(0)
-        return round(neuron.value)
+        neurons = last__layer.get__neurons()
+
+        arr = []
+        for neuron in neurons:
+            arr.append(neuron.value)
+        return arr
 
     def get__result(self):
         layer = self.get__layer(len(self.layers)-1)
-        neuron = layer.get__neuron(0)
-        print("Значение нейрона: ", neuron.value)
+        neurons = layer.get__neurons()
+        arr = []
+        for neuron in neurons:
+            arr.append(neuron.value)
+        print("При учителе: ", self.teacher[self.current__teacher_index])
+        print("Значение нейронов = ", arr)
 
     def get__same_neuron(self, neuron, list):
         for n in list:
@@ -57,9 +66,15 @@ class WithTeacherNetwork(Network):
 
     def calculate__error(self):
         last__layer = self.get__layer(len(self.layers)-1)
-        neuron = last__layer.get__neuron(0)
-        expected_value = self.teacher[self.current__teacher_index][1]
-        neuron.error = neuron.value - expected_value
+        neurons = last__layer.get__neurons()
+        i = 0
+        for neuron in neurons:
+            expected_value = self.teacher[self.current__teacher_index][1][i]
+            neuron.error = neuron.value - expected_value
+            # print("Ошибка нейрона ", i, " = ", neuron.error)
+            # print("Значение нейрона ", i, " = ", neuron.value)
+            # print("Значение учителя = ", self.teacher[self.current__teacher_index][1][i])
+            i += 1
 
     def get__weights(self):
         i = 1
@@ -73,7 +88,6 @@ class WithTeacherNetwork(Network):
                     print(bound['weight'])
                 print("_______________________")
             i += 1
-
 
     def back__distribution(self):
         self.calculate__error()
