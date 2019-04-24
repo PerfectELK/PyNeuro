@@ -19,10 +19,10 @@ class Neuron:
                 bound['weight'] = weight
 
     def bind(self, neuron, weight):
-        self.bounded.append({'neuron': neuron, 'weight': weight})
+        self.bounded.append({'neuron': neuron, 'weight': weight, 'error': 0})
 
     def reverse__bind(self, neuron):
-        self.reverse_bounded.append({'neuron': neuron})
+        self.reverse_bounded.append({'neuron': neuron, 'error': 0})
 
     def get_bounded(self):
         return self.bounded

@@ -9,8 +9,8 @@ class WithTeacherNetwork(Network):
         super().__init__(layers=config)
         self.teacher = teacher
         self.current__teacher_index = 0
-        self.learning__rate = .07
-        self.learning__ages = 75000
+        self.learning__rate = .6
+        self.learning__ages = 15000
         self.weights__delta = None
 
     def training(self):
@@ -21,7 +21,7 @@ class WithTeacherNetwork(Network):
                 self.forward__distribution()
                 self.back__distribution()
                 self.weights__delta = None
-                # self.get__result()
+                self.get__result()
             i += 1
 
     def forward__distribution(self):
@@ -98,11 +98,32 @@ class WithTeacherNetwork(Network):
                 self.weights__delta = neuron.error * neuron.sigmoid_dx()
 
                 for reverse in neuron.get__reverse_bounded():
+
                     reverse__same = self.get__same_neuron(neuron, reverse['neuron'].get_bounded())
                     reverse__value = reverse['neuron'].value
                     reverse__same['weight'] = reverse__same['weight'] - reverse__value * self.weights__delta * self.learning__rate
                     reverse['neuron'].error = reverse__same['weight'] * self.weights__delta
 
+    # def back__distribution(self):
+    #
+    #     self.calculate__error()
+    #     i = 0
+    #     for layer in reversed(self.layers):
+    #         for neuron in layer.get__neurons():
+    #
+    #             if i == 0:
+    #                 self.weights__delta = neuron.error * neuron.sigmoid_dx()
+    #
+    #             for reverse in neuron.get__reverse_bounded():
+    #
+    #                 if i > 0:
+    #                     self.weights__delta = neuron.error * neuron.sigmoid_dx()
+    #
+    #                 reverse__same = self.get__same_neuron(neuron, reverse['neuron'].get_bounded())
+    #                 reverse__value = reverse['neuron'].value
+    #                 reverse__same['weight'] = reverse__same['weight'] - reverse__value * self.weights__delta * self.learning__rate
+    #                 reverse__same['neuron'].error = reverse__same['weight'] * self.weights__delta
+    #         i += 1
 
 
 
