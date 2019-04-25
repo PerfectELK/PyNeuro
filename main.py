@@ -7,12 +7,16 @@ layers = [
         'begin__values': [1, 1, 1, 1, 1, 1],
     },
     {
-        'amount_neurons': 8,
-        'begin__values': [1, 1, 1, 1, 1, 1, 1, 1],
+        'amount_neurons': 4,
+        'begin__values': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     },
     {
-        'amount_neurons': 4,
-        'begin__values': [1, 1, 1, 1],
+        'amount_neurons': 3,
+        'begin__values': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    },
+    {
+        'amount_neurons': 2,
+        'begin__values': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     },
     {
         'amount_neurons': 2,
